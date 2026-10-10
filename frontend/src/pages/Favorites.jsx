@@ -1,0 +1,2 @@
+import {useEffect,useState} from "react";import api from "../api/api";import TrackList from "../components/TrackList";
+export default function Favorites(){const [tracks,setTracks]=useState([]);const load=()=>api.get('/favorites').then(r=>setTracks(r.data));useEffect(load,[]);return <section><h1>Избранное</h1><p className="muted">Треки, которые тебе понравились</p><TrackList tracks={tracks} favoriteIds={tracks.map(x=>x.id)} onFavorite={async t=>{await api.delete(`/favorites/${t.id}`);load()}}/></section>}
