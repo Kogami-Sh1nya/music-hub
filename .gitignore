@@ -12,3 +12,4 @@ __pycache__/
 .Scripts/
 htmlcov/
 node_modules/
+demo_music/

@@ -15,6 +15,12 @@ favorites = Table(
     Column("track_id", ForeignKey("tracks.id", ondelete="CASCADE"), primary_key=True),
 )
 
+track_tags = Table(
+    "track_tags", Base.metadata,
+    Column("track_id", ForeignKey("tracks.id", ondelete="CASCADE"), primary_key=True),
+    Column("tag_id", ForeignKey("tags.id", ondelete="CASCADE"), primary_key=True),
+)
+
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True)
@@ -35,6 +41,22 @@ class Track(Base):
     uploaded_at = Column(DateTime, default=datetime.utcnow)
     liked_by = relationship("User", secondary=favorites, back_populates="favorite_tracks")
     playlists = relationship("Playlist", secondary=playlist_tracks, back_populates="tracks")
+    tags = relationship("Tag", secondary=track_tags, back_populates="tracks", order_by="Tag.name")
+
+class Tag(Base):
+    """Тег трека: жанр (рок, джаз), настроение (грустное, для спорта) и т.д."""
+    __tablename__ = "tags"
+    id = Column(Integer, primary_key=True)
+    name = Column(String(40), unique=True, nullable=False, index=True)
+    tracks = relationship("Track", secondary=track_tags, back_populates="tags")
+
+class Listen(Base):
+    """Одно прослушивание трека пользователем. По этим записям строятся рекомендации."""
+    __tablename__ = "listens"
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
+    track_id = Column(Integer, ForeignKey("tracks.id", ondelete="CASCADE"), nullable=False, index=True)
+    played_at = Column(DateTime, default=datetime.utcnow)
 
 class Playlist(Base):
     __tablename__ = "playlists"

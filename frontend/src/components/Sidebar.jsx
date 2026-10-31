@@ -1,2 +1,19 @@
 import {NavLink} from "react-router-dom";
-export default function Sidebar({logout}) { return <aside className="sidebar"><div className="brand"><i className="bi bi-soundwave"/> Music Hub</div><nav><NavLink to="/"><i className="bi bi-house"/> Главная</NavLink><NavLink to="/search"><i className="bi bi-search"/> Поиск</NavLink><NavLink to="/favorites"><i className="bi bi-heart"/> Избранное</NavLink><NavLink to="/playlists"><i className="bi bi-music-note-list"/> Плейлисты</NavLink><NavLink to="/upload"><i className="bi bi-cloud-arrow-up"/> Загрузить</NavLink></nav><button className="logout" onClick={logout}><i className="bi bi-box-arrow-left"/> Выйти</button></aside> }
+export default function Sidebar({logout}) {
+  return (
+    <aside className="sidebar">
+      <div className="brand"><i className="bi bi-soundwave"/> Music Hub</div>
+      <nav>
+        <NavLink to="/" end><i className="bi bi-house"/> Главная</NavLink>
+        <NavLink to="/search"><i className="bi bi-search"/> Поиск</NavLink>
+        <NavLink to="/authors"><i className="bi bi-people"/> Авторы</NavLink>
+        <NavLink to="/tags"><i className="bi bi-tags"/> Теги</NavLink>
+        <NavLink to="/favorites"><i className="bi bi-heart"/> Избранное</NavLink>
+        <NavLink to="/playlists"><i className="bi bi-music-note-list"/> Плейлисты</NavLink>
+        <NavLink to="/upload"><i className="bi bi-cloud-arrow-up"/> Загрузить</NavLink>
+        <NavLink to="/profile"><i className="bi bi-person-circle"/> Профиль</NavLink>
+      </nav>
+      <button className="logout" onClick={logout}><i className="bi bi-box-arrow-left"/> Выйти</button>
+    </aside>
+  );
+}
